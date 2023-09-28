@@ -1,0 +1,31 @@
+name: Security checks
+description: Run security checks over codebase
+
+runs:
+  using: "composite"
+  steps:
+    - name: List current directory
+      run: |
+        echo ${{ github.workspace }}
+        ls
+        pwd
+      shell: bash
+
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        persist-credentials: false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        registry-url: https://npm.pkg.github.com/
+
+    - name: List current directory
+      run: |
+        echo ${{ github.workspace }}
+        ls
+        pwd
+      shell: bash

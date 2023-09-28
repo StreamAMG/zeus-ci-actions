@@ -31,14 +31,8 @@ runs:
         restore-keys: |
           ${{ runner.os }}-node-checkout-
 
-    - name: Install audit-ci package
+    - name: Install audit-ci package and run it
       run: |
-        pwd
-        ls
-        npm install audit-ci
-      shell: bash
-
-    - name: Run audit-ci cmd
-      run: |
+        npm install audit-ci -g
         audit-ci --config ${{ github.action_path }}/audit-ci.json
       shell: bash

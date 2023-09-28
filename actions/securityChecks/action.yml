@@ -23,19 +23,28 @@ runs:
         node-version: 18
         registry-url: https://npm.pkg.github.com/
 
+    - name: Cache NPM
+      uses: actions/cache@v3
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-checkout-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-checkout-
+
+    - name: Install Dependencies
+      shell: bash
+      run: npm ci
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.DEPLOYMENT_PIPELINE_GITHUB_PACKAGES_READ }}
+
     - name: Install audit-ci package
       run: |
+        pwd
+        ls
         npm install audit-ci
       shell: bash
 
     - name: Run audit-ci cmd
       run: |
         audit-ci --config ${{ github.action_path }}/audit-ci.json
-      shell: bash
-
-    - name: List action path
-      run: |
-        echo ${{ github.action_path }}
-        cd ${{ github.action_path }}
-        ls
       shell: bash

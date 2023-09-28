@@ -23,11 +23,14 @@ runs:
         node-version: 18
         registry-url: https://npm.pkg.github.com/
 
-    - name: List current directory
+    - name: Install audit-ci package
       run: |
-        echo ${{ github.workspace }}
-        ls
-        pwd
+        npm install audit-ci
+      shell: bash
+
+    - name: Run audit-ci cmd
+      run: |
+        audit-ci --config ${{ github.action_path }}/audit-ci.json
       shell: bash
 
     - name: List action path

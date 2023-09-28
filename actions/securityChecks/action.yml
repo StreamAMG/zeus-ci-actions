@@ -31,12 +31,6 @@ runs:
         restore-keys: |
           ${{ runner.os }}-node-checkout-
 
-    - name: Install Dependencies
-      shell: bash
-      run: npm ci
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.DEPLOYMENT_PIPELINE_GITHUB_PACKAGES_READ }}
-
     - name: Install audit-ci package
       run: |
         pwd

@@ -1,0 +1,53 @@
+name: CI checks
+
+on:
+  workflow_call:
+    inputs:
+      gh-token:
+        required: true
+        type: string
+
+jobs:
+  ci:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://npm.pkg.github.com/
+          cache: "npm"
+
+      - name: Cache NPM
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-checkout-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-checkout-
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ inputs.gh-token }}
+
+      # - name: Run security checks
+      #   uses: StreamAMG/zeus-ci-actions/actions/securityChecks@main
+
+      # - name: Run spelling checks
+      #   uses: StreamAMG/zeus-ci-actions/actions/spellChecks@main
+
+      - name: Run formatting checks
+        uses: StreamAMG/zeus-ci-actions/actions/format@main
+        with:
+          token: ${{ inputs.gh-token }}
+
+      - name: Run linting checks
+        uses: StreamAMG/zeus-ci-actions/actions/lintChecks@main
+        with:
+          token: ${{ inputs.gh-token }}

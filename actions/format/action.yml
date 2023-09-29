@@ -27,5 +27,7 @@ runs:
     - name: Install prettier and run it
       run: |
         npm install prettier -g
+        ls
         prettier --check \"./**/*.{ts,js}\" --config ${{ github.action_path }}/.prettierrc
       shell: bash
+      working-directory: "./"

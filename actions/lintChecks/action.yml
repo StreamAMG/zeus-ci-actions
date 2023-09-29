@@ -41,14 +41,14 @@ runs:
         tsc --noemit
       shell: bash
 
-    # - name: Install markdownlint-cli and run it
-    #   run: |
-    #     npm install markdownlint-cli -g
-    #     markdownlint *.md --ignore CHANGELOG.md
-    #   shell: bash
+    - name: Install markdownlint-cli and run it
+      run: |
+        npm install markdownlint-cli -g
+        markdownlint *.md --ignore CHANGELOG.md
+      shell: bash
 
-    # - name: Install eslint and run it
-    #   run: |
-    #     npm install eslint -g
-    #     eslint . --max-warnings=0
-    #   shell: bash
+    - name: Install eslint and run it
+      run: |
+        npm install eslint -g
+        eslint . --max-warnings=0
+      shell: bash

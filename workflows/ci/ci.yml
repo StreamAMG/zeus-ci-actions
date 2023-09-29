@@ -2,7 +2,7 @@ name: CI checks
 
 on:
   workflow_call:
-    inputs:
+    secrets:
       gh-token:
         required: true
         type: string
@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
         env:
-          NODE_AUTH_TOKEN: ${{ inputs.gh-token }}
+          NODE_AUTH_TOKEN: ${{ secrets.gh-token }}
 
       # - name: Run security checks
       #   uses: StreamAMG/zeus-ci-actions/actions/securityChecks@main
@@ -45,9 +45,9 @@ jobs:
       - name: Run formatting checks
         uses: StreamAMG/zeus-ci-actions/actions/format@main
         with:
-          token: ${{ inputs.gh-token }}
+          token: ${{ secrets.gh-token }}
 
       - name: Run linting checks
         uses: StreamAMG/zeus-ci-actions/actions/lintChecks@main
         with:
-          token: ${{ inputs.gh-token }}
+          token: ${{ secrets.gh-token }}

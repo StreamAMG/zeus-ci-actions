@@ -1,5 +1,5 @@
-name: Security checks
-description: Run security checks over codebase
+name: Spell checks
+description: Run spelling checks over codebase
 
 runs:
   using: "composite"
@@ -24,8 +24,8 @@ runs:
         restore-keys: |
           ${{ runner.os }}-node-checkout-
 
-    - name: Install audit-ci package and run it
+    - name: Install cspell package and run it
       run: |
-        npm install audit-ci -g
-        audit-ci --config ${{ github.action_path }}/audit-ci.json
+        npm install cspell -g
+        cspell --config=.cspell.json .
       shell: bash

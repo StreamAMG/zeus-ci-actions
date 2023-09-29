@@ -1,5 +1,5 @@
-name: Security checks
-description: Run security checks over codebase
+name: Format checks
+description: Run prettier checks over codebase
 
 runs:
   using: "composite"
@@ -24,8 +24,8 @@ runs:
         restore-keys: |
           ${{ runner.os }}-node-checkout-
 
-    - name: Install audit-ci package and run it
+    - name: Install prettier and run it
       run: |
-        npm install audit-ci -g
-        audit-ci --config ${{ github.action_path }}/audit-ci.json
+        npm install prettier -g
+        prettier --check \"./**/*.{ts,js}\" --config ${{ github.action_path }}/.prettierrc
       shell: bash

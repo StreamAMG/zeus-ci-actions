@@ -1,5 +1,5 @@
-name: Security checks
-description: Run security checks over codebase
+name: Linting checks
+description: Run eslint checks over codebase
 
 runs:
   using: "composite"
@@ -24,8 +24,20 @@ runs:
         restore-keys: |
           ${{ runner.os }}-node-checkout-
 
-    - name: Install audit-ci package and run it
+    - name: Install ts and run it
       run: |
-        npm install audit-ci -g
-        audit-ci --config ${{ github.action_path }}/audit-ci.json
+        npm install typescript -g
+        tsc --noemit
       shell: bash
+
+    # - name: Install markdownlint-cli and run it
+    #   run: |
+    #     npm install markdownlint-cli -g
+    #     markdownlint *.md --ignore CHANGELOG.md
+    #   shell: bash
+
+    # - name: Install eslint and run it
+    #   run: |
+    #     npm install eslint -g
+    #     eslint . --max-warnings=0
+    #   shell: bash
